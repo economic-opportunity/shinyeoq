@@ -10,7 +10,6 @@ jobs:
     docker:
       - image: rocker/shiny-verse:latest
     steps:
-      -
       - checkout
       - run:
           name: Install package dependencies
