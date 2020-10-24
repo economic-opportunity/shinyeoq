@@ -10,6 +10,7 @@ jobs:
     docker:
       - image: rocker/shiny-verse:latest
     steps:
+      -
       - checkout
       - run:
           name: Install package dependencies
@@ -19,4 +20,4 @@ jobs:
           command: R CMD build .
       - run:
           name: Check package
-          command: R CMD check *tar.gz
+          command: R CMD check *tar.gz --no-manual
