@@ -14,7 +14,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+            - r-pkg-cache-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
             - r-pkg-cache-
       - checkout
       - run:
@@ -35,7 +35,7 @@ jobs:
           name: Check package
           command: R CMD check *tar.gz --no-manual
       - save_cache:
-          key: r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+          key: r-pkg-cache-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
           paths:
             "~/R/Library"
 
