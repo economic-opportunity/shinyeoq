@@ -12,10 +12,10 @@ jobs:
     environment:
       R_LIBS: ~/R/Library
     steps:
-      - restore_cache:
-          keys:
-            - r-pkg-cache-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
-            - r-pkg-cache-
+      # - restore_cache:
+      #     keys:
+      #       - r-pkg-cache-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
+      #       - r-pkg-cache-
       - checkout
       - run:
           name: Inst⁄all package dependencies
@@ -26,7 +26,7 @@ jobs:
           name: Session info and installed package versions
           command: |
             Rscript -e 'sessionInfo()'
-            Rscript -e 'installed.packages()[, c("Package", "Version")]
+            Rscript -e 'installed.packages()[, c("Package", "Version")]'
             Rscript -e 'rmarkdown::pandoc_version()'
       - run:
           name: Build package
@@ -34,9 +34,9 @@ jobs:
       - run:
           name: Check package
           command: R CMD check *tar.gz --no-manual
-      - save_cache:
-          key: r-pkg-cache-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
-          paths:
-            "~/R/Library"
+      # - save_cache:
+      #     key: r-pkg-cache-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
+      #     paths:
+      #       "~/R/Library"
 
 
