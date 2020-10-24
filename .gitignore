@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 data
+*Rcheck
+.DS_Store
