@@ -9,14 +9,24 @@ jobs:
   build:
     docker:
       - image: rocker/shiny-verse:latest
+    environment:
+      R_LIBS: ~/R/Library
     steps:
       - restore_cache:
-          keys:
-            - r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+          keys: r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
       - checkout
       - run:
-          name: Install package dependencies
-          command: R -e "devtools::install_deps(dep = TRUE)"
+          name: Inst⁄all package dependencies
+          command: |
+            mkdir -p ~/R/Library
+            Rscript -e 'install.packages("remotes")'
+            Rscript -e 'remotes::install_dependencies(dependencies = TRUE)'
+      - run:
+          name: Session info and installed package versions
+          command: |
+            Rscript -e 'sessionInfo()'
+            Rscript -e 'installed.packages()[, c("Package", "Version")]
+            Rscript -e 'rmarkdown::pandoc_version()'
       - run:
           name: Build package
           command: R CMD build .
@@ -24,7 +34,8 @@ jobs:
           name: Check package
           command: R CMD check *tar.gz --no-manual
       - save_cache:
-          keys:
-            - r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+          key: r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+          paths:
+            "~/R/Library"
 
 
