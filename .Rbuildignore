@@ -1,2 +1,4 @@
 ^shinyeoq\.Rproj$
 ^\.Rproj\.user$
+^\.circleci$
+^\.circleci/config\.yml$
