@@ -10,6 +10,9 @@ jobs:
     docker:
       - image: rocker/shiny-verse:latest
     steps:
+      - restore_cache:
+          keys:
+            - r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
       - checkout
       - run:
           name: Install package dependencies
@@ -20,3 +23,8 @@ jobs:
       - run:
           name: Check package
           command: R CMD check *tar.gz --no-manual
+      - save_cache:
+          keys:
+            - r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+
+
