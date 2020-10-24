@@ -13,14 +13,15 @@ jobs:
       R_LIBS: ~/R/Library
     steps:
       - restore_cache:
-          keys: r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+          keys:
+            - r-pkg-cache-{{ .Branch }}-{{ checksum DESCRIPTION }}
+            - r-pkg-cache-
       - checkout
       - run:
           name: Inst⁄all package dependencies
           command: |
             mkdir -p ~/R/Library
-            Rscript -e 'install.packages("remotes")'
-            Rscript -e 'remotes::install_dependencies(dependencies = TRUE)'
+            Rscript -e 'devtools::install_dependencies(dep = TRUE)'
       - run:
           name: Session info and installed package versions
           command: |
