@@ -9,6 +9,9 @@ jobs:
   build:
     docker:
       - image: rocker/shiny-verse:latest
+        auth:
+          username: seamusmckinsey
+          password: $DOCKERHUB_PASSWORD
     environment:
       R_LIBS: ~/R/Library
     steps:
