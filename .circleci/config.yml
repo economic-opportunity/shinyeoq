@@ -21,7 +21,7 @@ jobs:
           name: Inst⁄all package dependencies
           command: |
             mkdir -p ~/R/Library
-            Rscript -e 'devtools::install_dependencies(dep = TRUE)'
+            Rscript -e 'devtools::install_deps(dependencies = TRUE)'
       - run:
           name: Session info and installed package versions
           command: |
