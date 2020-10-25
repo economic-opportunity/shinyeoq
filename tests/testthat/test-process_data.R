@@ -9,11 +9,11 @@ test_that("make_percentiles returns percentiles", {
 
 test_that("make_percentiles calculates mean properly", {
   expect_equal(
-    make_percentiles(ggplot2::diamonds, price) %>%
+    tibble::tibble(x = 1:1000, y = 1:1000) %>%
+      make_percentiles(y) %>%
       dplyr::pull(mean) %>%
-      mean() %>%
-      round(),
-    3933)
+      mean(),
+    500.5)
 })
 
 
