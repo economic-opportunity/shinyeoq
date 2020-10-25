@@ -10,7 +10,7 @@ library(shinyeoq)
 # load --------------------------------------------------------------------
 
 dropbox_data_filepath <- "~/Dropbox/Economic Opportunity Project/Data/Comparison to Peers/Outputs"
-acs_dropbox_filepath <- file.path(dropbox_data_filepath, "ACS_Cleaned.csv.zip")
+acs_dropbox_filepath <- file.path(dropbox_data_filepath, "ACS_Cleaned.zip")
 cps_dropbox_filepath <- file.path(dropbox_data_filepath, "CPS_Cleaned.zip")
 
 
@@ -37,4 +37,4 @@ sexes <- c("All", "Male", "Female")
 # options -----------------------------------------------------------------
 
 # set ggplot theme
-theme_set(tidyquant::theme_tq())
+ggplot2::theme_set(tidyquant::theme_tq())

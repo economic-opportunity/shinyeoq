@@ -66,7 +66,8 @@ server <- function(input, output) {
       ggplot(aes(decile, mean_wage, fill = has_user_higher_wage)) +
       geom_col() +
       geom_text(aes(label = round(mean_wage, 1)),
-                nudge_y = 1)
+                nudge_y = 1) +
+      coord_flip()
 
   })
 

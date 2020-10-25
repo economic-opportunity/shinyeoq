@@ -96,6 +96,7 @@ make_education <- function(.data, var) {
 #' Process cleaned ACS/CPS data for shiny app
 #'
 #' @param .data tibble
+#' @param input input from shiny
 #'
 #' @return tibble
 #' @export
@@ -114,3 +115,24 @@ process_data <- function(.data, input) {
     )
 
 }
+
+#' Make unemployment metric
+#'
+#' @param .data tibble
+#' @param var unemployment variable
+#' @param ... grouping variables
+#'
+#' @return tibble
+#' @export
+#'
+#' @examples
+make_unemployment <- function(.data, var, ...) {
+  .data %>%
+    group_by(...) %>%
+    summarize(
+      unemployment_rate = sum(employmentstatus == 2) / sum(employmentstatus %in% c(1,2))
+      )
+
+}
+
+
