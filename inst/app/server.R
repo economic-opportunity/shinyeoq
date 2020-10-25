@@ -6,6 +6,17 @@ server <- function(input, output) {
 
   })
 
+  user_percentile <- reactive({
+
+    cps_filtered_df() %>%
+      filter(mean >= input$user_wage) %>%
+      pull(percentile) %>%
+      min() %>%
+      # avoiding infinite
+      min(., 100)
+
+  })
+
   cps_filtered_df <- eventReactive(input$calculate, {
 
     cps %>%
@@ -59,6 +70,22 @@ server <- function(input, output) {
 
   })
 
+  output$cps_ecdf <- renderPlot({
+
+    validate(
+      need(input$user_wage, "Please select your wage.")
+    )
+
+    cps_filtered_df() %>%
+      ggplot() +
+      geom_line(aes(mean, percentile)) +
+      geom_point(aes(input$user_wage, user_percentile()))
+
+  })
+
+  output$cps_text <- renderPrint({
+    glue::glue("Your wage is higher than ", user_percentile(), "% of the comparison group.")
+  })
 
 
   acs_decile_df <- reactive({
@@ -73,6 +100,10 @@ server <- function(input, output) {
 
   output$acs_histogram <- renderPlot({
 
+    validate(
+      need(input$user_wage, "Please select your wage.")
+    )
+
     acs_filtered_df() %>%
       ggplot(aes(mean)) +
       geom_histogram() +
@@ -82,12 +113,17 @@ server <- function(input, output) {
 
   output$acs_decile_plot <- renderPlot({
 
+    validate(
+      need(input$user_wage, "Please select your wage.")
+    )
+
     acs_decile_df() %>%
       mutate(has_user_higher_wage = mean_wage < user_yearly_wage()) %>%
       ggplot(aes(decile, mean_wage, fill = has_user_higher_wage)) +
       geom_col() +
       geom_text(aes(label = round(mean_wage, 1)),
                 nudge_y = 1)
+
 
   })
 

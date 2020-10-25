@@ -23,4 +23,5 @@ Imports:
     ggplot2,
     plotly,
     stats,
-    stringr
+    stringr,
+    glue

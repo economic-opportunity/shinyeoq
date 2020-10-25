@@ -41,8 +41,10 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(type = "tabs",
                   tabPanel("CPS",
+                           textOutput("cps_text"),
                            plotOutput("cps_histogram"),
-                           plotOutput("cps_decile_plot")
+                           plotOutput("cps_decile_plot"),
+                           plotOutput("cps_ecdf")
                   ),
                   tabPanel("ACS",
                            plotOutput("acs_histogram"),

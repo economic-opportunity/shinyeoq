@@ -5,6 +5,7 @@ library(tidyverse)
 library(janitor)
 library(shinythemes)
 library(shinyWidgets)
+library(shinyeoq)
 
 # load --------------------------------------------------------------------
 
@@ -28,8 +29,8 @@ races_ethnicities <- c("All", "White", "Black", "Asian", "Hispanic", "Other")
 age_ranges <- c("All", "Under 20", "20-29", "30-39",
                 "40-49", "50-59", "Over 60")
 
-edu_levels <- c("All", "Less than high school", "High school",
-                "Bachelor's degree", "Advanced degree")
+edu_levels <- c("All", "Less Than High School", "High School",
+                "Bachelor's Degree", "Advanced Degree")
 
 sexes <- c("All", "Male", "Female")
 
