@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 ^\.circleci$
 ^\.circleci/config\.yml$
+^codecov\.yml$
+^\.covrignore$

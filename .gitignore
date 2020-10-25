@@ -4,3 +4,4 @@
 data
 *Rcheck
 .DS_Store
+inst/app/rsconnect/*
