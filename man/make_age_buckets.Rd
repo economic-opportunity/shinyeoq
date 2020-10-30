@@ -4,13 +4,15 @@
 \alias{make_age_buckets}
 \title{Make age buckets}
 \usage{
-make_age_buckets(.data, var, ...)
+make_age_buckets(.data, var)
 }
 \arguments{
-\item{...}{}
+\item{.data}{tibble}
+
+\item{var}{age variable}
 }
 \value{
-
+tibble
 }
 \description{
 Make age buckets

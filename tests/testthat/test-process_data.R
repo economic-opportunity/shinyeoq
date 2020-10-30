@@ -25,6 +25,4 @@ test_that("age_buckets returns 6 buckets", {
     c("Under 20", "20-29", "30-39",
       "40-49", "50-59", "Over 60")
   )
-
-
 })

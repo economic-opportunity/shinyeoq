@@ -40,16 +40,17 @@ ui <- fluidPage(
     # Show a plot of the generated distribution
     mainPanel(
       tabsetPanel(type = "tabs",
-                  tabPanel("CPS",
+                  tabPanel("Wages",
                            textOutput("cps_text"),
                            plotOutput("cps_histogram"),
                            plotOutput("cps_decile_plot"),
                            plotOutput("cps_ecdf")
                   ),
-                  tabPanel("ACS",
-                           plotOutput("acs_histogram"),
-                           plotOutput("acs_decile_plot")
-                  )
+                  tabPanel("Unemployment rate",
+                           plotOutput("unemployment_rate")
+                  ),
+                  tabPanel("Hours worked",
+                           plotOutput("hours_worked"))
 
       )
 

@@ -28,5 +28,5 @@ grp_vars <- c("age_bucket", "education", "race_ethnicity", "is_male")
 
 acs_summarized <- acs %>%
   make_age_buckets(age) %>%
-  make_race_ethnicity(racehispanic) %>%
+  clean_race_ethnicity(racehispanic) %>%
   make_percentiles(!!!grp_vars)

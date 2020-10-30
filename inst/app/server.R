@@ -6,6 +6,21 @@ server <- function(input, output) {
 
   })
 
+  cps_filtered_df <- eventReactive(input$calculate, {
+
+    cps %>%
+      process_data(input) %>%
+      make_percentiles(hourlywage, 100)
+
+  })
+
+  cps_decile_df <- reactive({
+    cps_filtered_df() %>%
+      mutate(decile = ntile(mean, 10)) %>%
+      group_by(decile) %>%
+      summarize(mean_wage = mean(mean))
+  })
+
   user_percentile <- reactive({
 
     cps_filtered_df() %>%
@@ -17,29 +32,7 @@ server <- function(input, output) {
 
   })
 
-  cps_filtered_df <- eventReactive(input$calculate, {
 
-    cps %>%
-      process_data(input) %>%
-      make_percentiles(hourlywage, 100)
-
-  })
-
-
-  acs_filtered_df <- eventReactive(input$calculate, {
-
-    acs %>%
-      process_data(input) %>%
-      make_percentiles(totalwage, 100)
-
-  })
-
-  cps_decile_df <- reactive({
-    cps_filtered_df() %>%
-      mutate(decile = ntile(mean, 10)) %>%
-      group_by(decile) %>%
-      summarize(mean_wage = mean(mean))
-  })
 
   output$cps_histogram <- renderPlot({
 
@@ -86,46 +79,6 @@ server <- function(input, output) {
 
   output$cps_text <- renderPrint({
     glue::glue("Your wage is higher than ", user_percentile(), "% of the comparison group.")
-  })
-
-
-  acs_decile_df <- reactive({
-
-    acs_filtered_df() %>%
-      mutate(decile = ntile(mean, 10)) %>%
-      group_by(decile) %>%
-      summarize(mean_wage = mean(mean))
-
-  })
-
-
-  output$acs_histogram <- renderPlot({
-
-    validate(
-      need(input$user_wage, "Please select your wage.")
-    )
-
-    acs_filtered_df() %>%
-      ggplot(aes(mean)) +
-      geom_histogram() +
-      geom_vline(xintercept = user_yearly_wage())
-
-  })
-
-  output$acs_decile_plot <- renderPlot({
-
-    validate(
-      need(input$user_wage, "Please select your wage.")
-    )
-
-    acs_decile_df() %>%
-      mutate(has_user_higher_wage = mean_wage < user_yearly_wage()) %>%
-      ggplot(aes(decile, mean_wage, fill = has_user_higher_wage)) +
-      geom_col() +
-      geom_text(aes(label = round(mean_wage, 1)),
-                nudge_y = 1)
-
-
   })
 
 
