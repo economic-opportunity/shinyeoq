@@ -12,6 +12,8 @@ calc_unemployment_rate(.data, var, ..., na.rm = TRUE)
 \item{var}{unemployment variable}
 
 \item{...}{grouping variables}
+
+\item{na.rm}{whether to remove null values from calc, defaults to true}
 }
 \value{
 tibble

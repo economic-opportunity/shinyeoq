@@ -72,7 +72,7 @@ clean_race_ethnicity <- function(.data, var) {
         {{ var }} == 3 ~ "Hispanic",
         {{ var }} == 4 ~ "Asian",
         {{ var }} == 5 ~ "Other",
-        is.character( {{ var }} ) ~ stringr::str_to_title( {{ var }} ),
+        is.character( {{ var }} ) ~ str_to_title( {{ var }} ),
         TRUE ~ NA_character_
       )
     )
@@ -95,7 +95,7 @@ clean_race_ethnicity <- function(.data, var) {
 clean_education <- function(.data, var) {
   .data %>%
     mutate(
-      education = stringr::str_to_title( {{ var }} )
+      education = str_to_title( {{ var }} )
     )
 }
 
@@ -107,7 +107,7 @@ clean_education <- function(.data, var) {
 #' @return a tibble
 #' @export
 #' @importFrom dplyr pull
-#'
+#' @importFrom stringr str_to_sentence
 #' @examples
 #' \dontrun{
 #' cps %>% clean_employment(employmentstatus)
@@ -115,18 +115,24 @@ clean_education <- function(.data, var) {
 #' }
 clean_employment <- function(.data, var) {
 
-  if(.data %>% pull({{ var }}) %>% is.numeric())
-  .data %>%
-    mutate(
-      employmentstatus = case_when(
-        {{ var }} == 0 ~ "not in labor force",
-        {{ var }} == 1 ~ "unemployed",
-        {{ var }} == 2 ~ "employed",
-        {{ var }} == 3 ~ "in military",
-        TRUE           ~ NA_character_
-      )
+  if(.data %>% pull({{ var }}) %>% is.numeric()){
+    .data %>%
+      mutate(
+        employmentstatus = case_when(
+          {{ var }} == 0 ~ "Not in labor force",
+          {{ var }} == 1 ~ "Unemployed",
+          {{ var }} == 2 ~ "Employed",
+          {{ var }} == 3 ~ "In military",
+          TRUE           ~ NA_character_
+        )
 
-    )
+      )
+  } else {
+
+    .data %>%
+      mutate(employmentstatus = str_to_sentence({{ var }}))
+
+  }
 
 }
 
@@ -151,10 +157,10 @@ process_data <- function(.data, input) {
     clean_race_ethnicity(racehispanic) %>%
     clean_education(education) %>%
     filter(
-      if (input$comp_edu == "All")  TRUE else education == input$comp_edu,
-      if (input$comp_race == "All") TRUE else race_ethnicity == input$comp_race,
-      if (input$comp_age == "All")  TRUE else age_bucket == input$comp_age,
-      if (input$comp_sex == 2)  TRUE else is_male == input$comp_sex # 2 means All
+      if (input$comp_edu  == "All")   TRUE else education      == input$comp_edu,
+      if (input$comp_race == "All")   TRUE else race_ethnicity == input$comp_race,
+      if (input$comp_age  == "All")   TRUE else age_bucket     == input$comp_age,
+      if (input$comp_sex  ==     2)   TRUE else is_male        == input$comp_sex # 2 means All
     )
 
 }

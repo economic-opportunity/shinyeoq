@@ -17,10 +17,3 @@ tibble
 \description{
 Process cleaned ACS/CPS data for shiny app
 }
-\examples{
-# only works inside a shiny app
-\dontrun{
-cps \%>\% process_data(input)
-acs \%>\% process_data(input)
-}
-}
