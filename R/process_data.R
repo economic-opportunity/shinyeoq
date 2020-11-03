@@ -10,8 +10,8 @@
 #' @importFrom dplyr group_by mutate summarize ungroup ntile
 #' @importFrom stats median
 #' @examples
-#' sample_acs %>% make_percentiles(totalwage)
-#' sample_cps %>% make_percentiles(hourlywage, education)
+#' shinyeoq::sample_acs %>% make_percentiles(totalwage)
+#' shinyeoq::sample_cps %>% make_percentiles(hourlywage, education)
 make_percentiles <- function(data, var, ..., n = 100) {
 
   data %>%
@@ -34,8 +34,8 @@ make_percentiles <- function(data, var, ..., n = 100) {
 #' @export
 #' @importFrom dplyr case_when
 #' @examples
-#' sample_cps %>% make_age_buckets(age)
-#' sample_acs %>% make_age_buckets(age)
+#' shinyeoq::sample_cps %>% make_age_buckets(age)
+#' shinyeoq::sample_acs %>% make_age_buckets(age)
 make_age_buckets <- function(data, var){
 
   data %>%
@@ -62,8 +62,8 @@ make_age_buckets <- function(data, var){
 #' @importFrom dplyr case_when
 #' @importFrom stringr str_to_title
 #' @examples
-#' sample_cps %>% clean_race_ethnicity(racehispanic)
-#' sample_acs %>% clean_race_ethnicity(racehispanic)
+#' shinyeoq::sample_cps %>% clean_race_ethnicity(racehispanic)
+#' shinyeoq::sample_acs %>% clean_race_ethnicity(racehispanic)
 clean_race_ethnicity <- function(data, var) {
 
   data %>%
@@ -90,8 +90,8 @@ clean_race_ethnicity <- function(data, var) {
 #' @export
 #' @importFrom stringr str_to_title
 #' @examples
-#' sample_cps %>% clean_education(education)
-#' sample_acs %>% clean_education(education)
+#' shinyeoq::sample_cps %>% clean_education(education)
+#' shinyeoq::sample_acs %>% clean_education(education)
 clean_education <- function(data, var) {
   data %>%
     mutate(
@@ -109,8 +109,8 @@ clean_education <- function(data, var) {
 #' @importFrom dplyr pull case_when
 #' @importFrom stringr str_to_sentence
 #' @examples
-#' sample_cps %>% clean_employment(employmentstatus)
-#' sample_acs %>% clean_employment(employmentstatus)
+#' shinyeoq::sample_cps %>% clean_employment(employmentstatus)
+#' shinyeoq::sample_acs %>% clean_employment(employmentstatus)
 clean_employment <- function(data, var) {
 
   if(data %>% pull({{ var }}) %>% is.numeric()){
@@ -146,8 +146,8 @@ clean_employment <- function(data, var) {
 #' @examples
 #' \dontrun{
 #' # only works inside a shiny app
-#' sample_cps %>% process_data(input)
-#' sample_acs %>% process_data(input)
+#' shinyeoq::sample_cps %>% process_data(input)
+#' shinyeoq::sample_acs %>% process_data(input)
 #' }
 process_data <- function(data, input) {
   data %>%
@@ -174,8 +174,8 @@ process_data <- function(data, input) {
 #' @export
 #' @importFrom dplyr pull group_by summarize
 #' @examples
-#' sample_cps %>% calc_unemployment_rate(employmentstatus)
-#' sample_acs %>% calc_unemployment_rate(employmentstatus)
+#' shinyeoq::sample_cps %>% calc_unemployment_rate(employmentstatus)
+#' shinyeoq::sample_acs %>% calc_unemployment_rate(employmentstatus)
 calc_unemployment_rate <- function(data, var, ..., na.rm = TRUE) {
 
   if(data %>% pull({{ var }}) %>% is.numeric()){
