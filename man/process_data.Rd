@@ -20,7 +20,7 @@ Process cleaned ACS/CPS data for shiny app
 \examples{
 \dontrun{
 # only works inside a shiny app
-sample_cps \%>\% process_data(input)
-sample_acs \%>\% process_data(input)
+shinyeoq::sample_cps \%>\% process_data(input)
+shinyeoq::sample_acs \%>\% process_data(input)
 }
 }

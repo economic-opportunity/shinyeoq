@@ -22,6 +22,8 @@ tibble
 Calculate unemployment metric
 }
 \examples{
-sample_cps \%>\% calc_unemployment_rate(employmentstatus)
-sample_acs \%>\% calc_unemployment_rate(employmentstatus)
+\dontrun{
+shinyeoq::sample_cps \%>\% calc_unemployment_rate(employmentstatus)
+shinyeoq::sample_acs \%>\% calc_unemployment_rate(employmentstatus)
+}
 }

@@ -18,6 +18,8 @@ a tibble
 Clean unemployment variable
 }
 \examples{
-sample_cps \%>\% clean_employment(employmentstatus)
-sample_acs \%>\% clean_employment(employmentstatus)
+\dontrun{
+shinyeoq::sample_cps \%>\% clean_employment(employmentstatus)
+shinyeoq::sample_acs \%>\% clean_employment(employmentstatus)
+}
 }

@@ -22,6 +22,8 @@ tibble
 Make percentiles for chart
 }
 \examples{
-sample_acs \%>\% make_percentiles(totalwage)
-sample_cps \%>\% make_percentiles(hourlywage, education)
+\dontrun{
+shinyeoq::sample_acs \%>\% make_percentiles(totalwage)
+shinyeoq::sample_cps \%>\% make_percentiles(hourlywage, education)
+}
 }

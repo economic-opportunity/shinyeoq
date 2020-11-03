@@ -18,6 +18,8 @@ tibble
 Make age buckets
 }
 \examples{
-sample_cps \%>\% make_age_buckets(age)
-sample_acs \%>\% make_age_buckets(age)
+\dontrun{
+shinyeoq::sample_cps \%>\% make_age_buckets(age)
+shinyeoq::sample_acs \%>\% make_age_buckets(age)
+}
 }

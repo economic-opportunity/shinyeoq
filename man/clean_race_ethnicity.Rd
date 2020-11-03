@@ -18,6 +18,6 @@ tibble
 Convert race / ethnicity to standard set
 }
 \examples{
-sample_cps \%>\% clean_race_ethnicity(racehispanic)
-sample_acs \%>\% clean_race_ethnicity(racehispanic)
+shinyeoq::sample_cps \%>\% clean_race_ethnicity(racehispanic)
+shinyeoq::sample_acs \%>\% clean_race_ethnicity(racehispanic)
 }

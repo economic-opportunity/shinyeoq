@@ -10,8 +10,10 @@
 #' @importFrom dplyr group_by mutate summarize ungroup ntile
 #' @importFrom stats median
 #' @examples
+#' \dontrun{
 #' shinyeoq::sample_acs %>% make_percentiles(totalwage)
 #' shinyeoq::sample_cps %>% make_percentiles(hourlywage, education)
+#' }
 make_percentiles <- function(data, var, ..., n = 100) {
 
   data %>%
@@ -34,8 +36,10 @@ make_percentiles <- function(data, var, ..., n = 100) {
 #' @export
 #' @importFrom dplyr case_when
 #' @examples
+#' \dontrun{
 #' shinyeoq::sample_cps %>% make_age_buckets(age)
 #' shinyeoq::sample_acs %>% make_age_buckets(age)
+#' }
 make_age_buckets <- function(data, var){
 
   data %>%
@@ -62,8 +66,10 @@ make_age_buckets <- function(data, var){
 #' @importFrom dplyr case_when
 #' @importFrom stringr str_to_title
 #' @examples
+#' \dontrun{
 #' shinyeoq::sample_cps %>% clean_race_ethnicity(racehispanic)
 #' shinyeoq::sample_acs %>% clean_race_ethnicity(racehispanic)
+#' }
 clean_race_ethnicity <- function(data, var) {
 
   data %>%
@@ -90,8 +96,10 @@ clean_race_ethnicity <- function(data, var) {
 #' @export
 #' @importFrom stringr str_to_title
 #' @examples
+#' \dontrun{
 #' shinyeoq::sample_cps %>% clean_education(education)
 #' shinyeoq::sample_acs %>% clean_education(education)
+#' }
 clean_education <- function(data, var) {
   data %>%
     mutate(
@@ -109,8 +117,10 @@ clean_education <- function(data, var) {
 #' @importFrom dplyr pull case_when
 #' @importFrom stringr str_to_sentence
 #' @examples
+#' \dontrun{
 #' shinyeoq::sample_cps %>% clean_employment(employmentstatus)
 #' shinyeoq::sample_acs %>% clean_employment(employmentstatus)
+#' }
 clean_employment <- function(data, var) {
 
   if(data %>% pull({{ var }}) %>% is.numeric()){
@@ -169,13 +179,14 @@ process_data <- function(data, input) {
 #' @param var unemployment variable
 #' @param ... grouping variables
 #' @param na.rm whether to remove null values from calculation, defaults to true
-#'
 #' @return tibble
 #' @export
 #' @importFrom dplyr pull group_by summarize
 #' @examples
+#' \dontrun{
 #' shinyeoq::sample_cps %>% calc_unemployment_rate(employmentstatus)
 #' shinyeoq::sample_acs %>% calc_unemployment_rate(employmentstatus)
+#' }
 calc_unemployment_rate <- function(data, var, ..., na.rm = TRUE) {
 
   if(data %>% pull({{ var }}) %>% is.numeric()){

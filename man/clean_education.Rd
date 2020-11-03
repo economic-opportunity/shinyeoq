@@ -18,6 +18,8 @@ tibble
 Convert education data to title case
 }
 \examples{
-sample_cps \%>\% clean_education(education)
-sample_acs \%>\% clean_education(education)
+\dontrun{
+shinyeoq::sample_cps \%>\% clean_education(education)
+shinyeoq::sample_acs \%>\% clean_education(education)
+}
 }
