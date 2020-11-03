@@ -4,3 +4,4 @@
 ^\.circleci/config\.yml$
 ^codecov\.yml$
 ^\.covrignore$
+^data-raw$

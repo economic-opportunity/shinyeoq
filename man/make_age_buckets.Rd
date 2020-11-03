@@ -4,10 +4,10 @@
 \alias{make_age_buckets}
 \title{Make age buckets}
 \usage{
-make_age_buckets(.data, var)
+make_age_buckets(data, var)
 }
 \arguments{
-\item{.data}{tibble}
+\item{data}{tibble}
 
 \item{var}{age variable}
 }
@@ -16,4 +16,8 @@ tibble
 }
 \description{
 Make age buckets
+}
+\examples{
+sample_cps \%>\% make_age_buckets(age)
+sample_acs \%>\% make_age_buckets(age)
 }

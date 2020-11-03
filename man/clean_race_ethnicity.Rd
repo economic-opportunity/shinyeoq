@@ -4,10 +4,10 @@
 \alias{clean_race_ethnicity}
 \title{Convert race / ethnicity to standard set}
 \usage{
-clean_race_ethnicity(.data, var)
+clean_race_ethnicity(data, var)
 }
 \arguments{
-\item{.data}{tibble}
+\item{data}{tibble}
 
 \item{var}{race variable}
 }
@@ -18,8 +18,6 @@ tibble
 Convert race / ethnicity to standard set
 }
 \examples{
-\dontrun{
-cps \%>\% clean_race_ethnicity(racehispanic)
-acs \%>\% clean_race_ethnicity(racehispanic)
-}
+sample_cps \%>\% clean_race_ethnicity(racehispanic)
+sample_acs \%>\% clean_race_ethnicity(racehispanic)
 }

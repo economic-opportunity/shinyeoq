@@ -4,10 +4,10 @@
 \alias{process_data}
 \title{Process cleaned ACS/CPS data for shiny app}
 \usage{
-process_data(.data, input)
+process_data(data, input)
 }
 \arguments{
-\item{.data}{tibble}
+\item{data}{tibble}
 
 \item{input}{input from shiny}
 }
@@ -16,4 +16,11 @@ tibble
 }
 \description{
 Process cleaned ACS/CPS data for shiny app
+}
+\examples{
+\dontrun{
+# only works inside a shiny app
+sample_cps \%>\% process_data(input)
+sample_acs \%>\% process_data(input)
+}
 }

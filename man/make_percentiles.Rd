@@ -4,20 +4,24 @@
 \alias{make_percentiles}
 \title{Make percentiles for chart}
 \usage{
-make_percentiles(.data, var, n = 100, ...)
+make_percentiles(data, var, ..., n = 100)
 }
 \arguments{
-\item{.data}{tibble}
+\item{data}{tibble}
 
 \item{var}{variable to take the mean and median of}
 
-\item{n}{number of ntiles, defaults to 100 for percentiles}
-
 \item{...}{grouping variables, optional}
+
+\item{n}{number of ntiles, defaults to 100 for percentiles}
 }
 \value{
 tibble
 }
 \description{
 Make percentiles for chart
+}
+\examples{
+sample_acs \%>\% make_percentiles(totalwage)
+sample_cps \%>\% make_percentiles(hourlywage, education)
 }

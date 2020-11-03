@@ -4,10 +4,10 @@
 \alias{clean_education}
 \title{Convert education data to title case}
 \usage{
-clean_education(.data, var)
+clean_education(data, var)
 }
 \arguments{
-\item{.data}{tibble}
+\item{data}{tibble}
 
 \item{var}{education variable}
 }
@@ -18,8 +18,6 @@ tibble
 Convert education data to title case
 }
 \examples{
-\dontrun{
-cps \%>\% clean_education(education)
-acs \%>\% clean_education(education)
-}
+sample_cps \%>\% clean_education(education)
+sample_acs \%>\% clean_education(education)
 }

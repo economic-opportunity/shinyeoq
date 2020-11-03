@@ -4,10 +4,10 @@
 \alias{clean_employment}
 \title{Clean unemployment variable}
 \usage{
-clean_employment(.data, var)
+clean_employment(data, var)
 }
 \arguments{
-\item{.data}{a tibble}
+\item{data}{a tibble}
 
 \item{var}{employment variable name, typically `employmentstatus``}
 }
@@ -18,8 +18,6 @@ a tibble
 Clean unemployment variable
 }
 \examples{
-\dontrun{
-cps \%>\% clean_employment(employmentstatus)
-acs \%>\% clean_employment(employmentstatus)
-}
+sample_cps \%>\% clean_employment(employmentstatus)
+sample_acs \%>\% clean_employment(employmentstatus)
 }

@@ -2,28 +2,26 @@
 % Please edit documentation in R/process_data.R
 \name{calc_unemployment_rate}
 \alias{calc_unemployment_rate}
-\title{Make unemployment metric}
+\title{Calculate unemployment metric}
 \usage{
-calc_unemployment_rate(.data, var, ..., na.rm = TRUE)
+calc_unemployment_rate(data, var, ..., na.rm = TRUE)
 }
 \arguments{
-\item{.data}{tibble}
+\item{data}{tibble}
 
 \item{var}{unemployment variable}
 
 \item{...}{grouping variables}
 
-\item{na.rm}{whether to remove null values from calc, defaults to true}
+\item{na.rm}{whether to remove null values from calculation, defaults to true}
 }
 \value{
 tibble
 }
 \description{
-Make unemployment metric
+Calculate unemployment metric
 }
 \examples{
-\dontrun{
-cps \%>\% calc_unemployment_rate(employmentstatus)
-acs \%>\% calc_unemployment_rate(employmentstatus)
-}
+sample_cps \%>\% calc_unemployment_rate(employmentstatus)
+sample_acs \%>\% calc_unemployment_rate(employmentstatus)
 }

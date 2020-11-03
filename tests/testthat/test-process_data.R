@@ -28,12 +28,14 @@ test_that("age_buckets returns 6 buckets", {
 })
 
 test_that("clean_race_ethnicity returns character", {
-  expect_type(clean_employment(tibble::tibble(x = 0:4), x)$race_ethnicity, "character")
+  expect_type(clean_race_ethnicity(tibble::tibble(x = 0:4), x)$race_ethnicity, "character")
 })
 
 test_that("clean_unemployment returns character", {
   expect_type(clean_employment(tibble::tibble(x = 0:4), x)$employmentstatus, "character")
 })
 
-test_that("clean_education returns title case")
+test_that("clean_education returns title case",{
+  expect_equal(clean_education(tibble::tibble(x = letters[0:4]), x)$education, LETTERS[0:4])
+})
 

@@ -1,6 +1,6 @@
 #' Make percentiles for chart
 #'
-#' @param .data tibble
+#' @param data tibble
 #' @param var variable to take the mean and median of
 #' @param n number of ntiles, defaults to 100 for percentiles
 #' @param ... grouping variables, optional
@@ -10,9 +10,11 @@
 #' @importFrom dplyr group_by mutate summarize ungroup ntile
 #' @importFrom stats median
 #' @examples
-make_percentiles <- function(.data, var, n = 100, ...) {
+#' sample_acs %>% make_percentiles(totalwage)
+#' sample_cps %>% make_percentiles(hourlywage, education)
+make_percentiles <- function(data, var, ..., n = 100) {
 
-  .data %>%
+  data %>%
     group_by(...) %>%
     mutate(percentile = ntile({{ var }}, n)) %>%
     group_by(..., percentile) %>%
@@ -25,18 +27,20 @@ make_percentiles <- function(.data, var, n = 100, ...) {
 
 #' Make age buckets
 #'
-#' @param .data tibble
+#' @param data tibble
 #' @param var age variable
 #'
 #' @return tibble
 #' @export
 #' @importFrom dplyr case_when
 #' @examples
-make_age_buckets <- function(.data, var){
+#' sample_cps %>% make_age_buckets(age)
+#' sample_acs %>% make_age_buckets(age)
+make_age_buckets <- function(data, var){
 
-  .data %>%
+  data %>%
     mutate(
-      age_bucket = dplyr::case_when(
+      age_bucket = case_when(
         {{ var }} >= 0  & {{ var }} < 20 ~ "Under 20",
         {{ var }} >= 20 & {{ var }} < 30 ~ "20-29",
         {{ var }} >= 30 & {{ var }} < 40 ~ "30-39",
@@ -50,7 +54,7 @@ make_age_buckets <- function(.data, var){
 
 #' Convert race / ethnicity to standard set
 #'
-#' @param .data tibble
+#' @param data tibble
 #' @param var race variable
 #'
 #' @return tibble
@@ -58,15 +62,13 @@ make_age_buckets <- function(.data, var){
 #' @importFrom dplyr case_when
 #' @importFrom stringr str_to_title
 #' @examples
-#' \dontrun{
-#' cps %>% clean_race_ethnicity(racehispanic)
-#' acs %>% clean_race_ethnicity(racehispanic)
-#' }
-clean_race_ethnicity <- function(.data, var) {
+#' sample_cps %>% clean_race_ethnicity(racehispanic)
+#' sample_acs %>% clean_race_ethnicity(racehispanic)
+clean_race_ethnicity <- function(data, var) {
 
-  .data %>%
+  data %>%
     mutate(
-      race_ethnicity = dplyr::case_when(
+      race_ethnicity = case_when(
         {{ var }} == 1 ~ "White",
         {{ var }} == 2 ~ "Black",
         {{ var }} == 3 ~ "Hispanic",
@@ -81,19 +83,17 @@ clean_race_ethnicity <- function(.data, var) {
 
 #' Convert education data to title case
 #'
-#' @param .data tibble
+#' @param data tibble
 #' @param var education variable
 #'
 #' @return tibble
 #' @export
 #' @importFrom stringr str_to_title
 #' @examples
-#' \dontrun{
-#' cps %>% clean_education(education)
-#' acs %>% clean_education(education)
-#' }
-clean_education <- function(.data, var) {
-  .data %>%
+#' sample_cps %>% clean_education(education)
+#' sample_acs %>% clean_education(education)
+clean_education <- function(data, var) {
+  data %>%
     mutate(
       education = str_to_title( {{ var }} )
     )
@@ -101,22 +101,20 @@ clean_education <- function(.data, var) {
 
 #' Clean unemployment variable
 #'
-#' @param .data a tibble
+#' @param data a tibble
 #' @param var employment variable name, typically `employmentstatus``
 #'
 #' @return a tibble
 #' @export
-#' @importFrom dplyr pull
+#' @importFrom dplyr pull case_when
 #' @importFrom stringr str_to_sentence
 #' @examples
-#' \dontrun{
-#' cps %>% clean_employment(employmentstatus)
-#' acs %>% clean_employment(employmentstatus)
-#' }
-clean_employment <- function(.data, var) {
+#' sample_cps %>% clean_employment(employmentstatus)
+#' sample_acs %>% clean_employment(employmentstatus)
+clean_employment <- function(data, var) {
 
-  if(.data %>% pull({{ var }}) %>% is.numeric()){
-    .data %>%
+  if(data %>% pull({{ var }}) %>% is.numeric()){
+    data %>%
       mutate(
         employmentstatus = case_when(
           {{ var }} == 0 ~ "Not in labor force",
@@ -129,7 +127,7 @@ clean_employment <- function(.data, var) {
       )
   } else {
 
-    .data %>%
+    data %>%
       mutate(employmentstatus = str_to_sentence({{ var }}))
 
   }
@@ -138,21 +136,21 @@ clean_employment <- function(.data, var) {
 
 #' Process cleaned ACS/CPS data for shiny app
 #'
-#' @param .data tibble
+#' @param data tibble
 #' @param input input from shiny
 #'
 #' @return tibble
 #' @export
+#' @importFrom dplyr filter
 #'
 #' @examples
-#' @importFrom dplyr filter
-#' # only works inside a shiny app
 #' \dontrun{
-#' cps %>% process_data(input)
-#' acs %>% process_data(input)
+#' # only works inside a shiny app
+#' sample_cps %>% process_data(input)
+#' sample_acs %>% process_data(input)
 #' }
-process_data <- function(.data, input) {
-  .data %>%
+process_data <- function(data, input) {
+  data %>%
     make_age_buckets(age) %>%
     clean_race_ethnicity(racehispanic) %>%
     clean_education(education) %>%
@@ -165,32 +163,30 @@ process_data <- function(.data, input) {
 
 }
 
-#' Make unemployment metric
+#' Calculate unemployment metric
 #'
-#' @param .data tibble
+#' @param data tibble
 #' @param var unemployment variable
 #' @param ... grouping variables
-#' @param na.rm whether to remove null values from calc, defaults to true
+#' @param na.rm whether to remove null values from calculation, defaults to true
 #'
 #' @return tibble
 #' @export
-#' @importFrom dplyr pull
+#' @importFrom dplyr pull group_by summarize
 #' @examples
-#' \dontrun{
-#' cps %>% calc_unemployment_rate(employmentstatus)
-#' acs %>% calc_unemployment_rate(employmentstatus)
-#' }
-calc_unemployment_rate <- function(.data, var, ..., na.rm = TRUE) {
+#' sample_cps %>% calc_unemployment_rate(employmentstatus)
+#' sample_acs %>% calc_unemployment_rate(employmentstatus)
+calc_unemployment_rate <- function(data, var, ..., na.rm = TRUE) {
 
-  if (is.numeric(.data %>% pull({{ var }}))){
-    .data %>%
+  if(data %>% pull({{ var }}) %>% is.numeric()){
+    data %>%
       group_by(...) %>%
       summarize(
         unemployment_rate = sum({{ var }} == 1, na.rm = na.rm) /
             sum({{ var }} %in% c(1,2), na.rm = na.rm)
         )
   } else {
-    .data %>%
+    data %>%
       group_by(...) %>%
       summarize(
         unemployment_rate = sum({{ var }} == "unemployed", na.rm = na.rm) /
