@@ -9,6 +9,9 @@ library(plotly)
 library(rjson)
 library(shinyeoq)
 
+# functions ---------------------------------------------------------------
+
+source("R/process_data.R")
 
 # load --------------------------------------------------------------------
 

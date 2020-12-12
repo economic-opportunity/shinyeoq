@@ -1,0 +1,10 @@
+name: shinyeoq
+title:
+username:
+account: seamus
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2718054
+bundleId: 3780290
+url: https://seamus.shinyapps.io/eoq_demo/
+when: 1603637003.90716
