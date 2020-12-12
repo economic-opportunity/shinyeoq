@@ -9,7 +9,7 @@ library(shinythemes)
 library(shinyWidgets)
 library(plotly)
 library(rjson)
-
+library(eoq)
 
 # funcs -------------------------------------------------------------------
 
