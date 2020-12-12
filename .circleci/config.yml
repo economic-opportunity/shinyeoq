@@ -1,8 +1,9 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: rocker/verse:latest
-    environment:
-      R_LIBS: ~/R/Library
-
+version: 2.1
+orbs:
+  rize: vanessa/rize@1.0.0
+workflows:
+  rize_and_deploy:
+    jobs:
+      - rize/rize:
+          container-name: $DOCKERHUB_USERNAME/shinyeoq
+          container-tag: latest
