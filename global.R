@@ -11,10 +11,6 @@ library(plotly)
 library(rjson)
 library(eoq)
 
-# funcs -------------------------------------------------------------------
-
-source("R/process_data.R")
-
 # load --------------------------------------------------------------------
 
 dropbox_data_filepath <- "~/Dropbox/Economic Opportunity Project/Data/Comparison to Peers/Outputs"

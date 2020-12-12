@@ -302,11 +302,11 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "economic-opportunity",
       "RemoteRepo": "eoq",
-      "RemoteRef": "master",
+      "RemoteUsername": "economic-opportunity",
+      "RemoteRef": "HEAD",
       "RemoteSha": "615befaba209b23fa5fc35f47cbe51abc79d9429",
-      "Hash": "2408418f43546ef136a4300f6a3f7399"
+      "Hash": "2771d253a3c3886b2f59d597dcc52f6e"
     },
     "evaluate": {
       "Package": "evaluate",
@@ -930,12 +930,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "133639dc106955eee4ffb8ec73edac37"
-    },
-    "shinyeoq": {
-      "Package": "shinyeoq",
-      "Version": "0.0.0.9000",
-      "Source": "unknown",
-      "Hash": "1b933cf5abd7ed89e858197c4d18b0da"
     },
     "shinythemes": {
       "Package": "shinythemes",
