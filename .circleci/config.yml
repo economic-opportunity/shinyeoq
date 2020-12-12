@@ -5,5 +5,5 @@ workflows:
   rize_and_deploy:
     jobs:
       - rize/rize:
-          container-name: $DOCKERHUB_USERNAME/shinyeoq
+          container-name: seamusmckinsey/shinyeoq
           container-tag: latest
