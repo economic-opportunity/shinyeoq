@@ -296,18 +296,6 @@
       "Repository": "CRAN",
       "Hash": "fd2844b3a43ae2d27e70ece2df1b4e2a"
     },
-    "eoq": {
-      "Package": "eoq",
-      "Version": "0.0.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "eoq",
-      "RemoteUsername": "economic-opportunity",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "615befaba209b23fa5fc35f47cbe51abc79d9429",
-      "Hash": "2771d253a3c3886b2f59d597dcc52f6e"
-    },
     "evaluate": {
       "Package": "evaluate",
       "Version": "0.14",

@@ -6,7 +6,6 @@ library(tidyverse)
 library(janitor)
 library(shinythemes)
 library(shinydashboard)
-library(eoq)
 
 # load --------------------------------------------------------------------
 

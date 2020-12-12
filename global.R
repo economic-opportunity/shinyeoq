@@ -9,19 +9,21 @@ library(shinythemes)
 library(shinyWidgets)
 library(plotly)
 library(rjson)
-library(eoq)
+
+
+# funcs -------------------------------------------------------------------
+
+source("funcs.R")
 
 # load --------------------------------------------------------------------
 
-dropbox_data_filepath <- "~/Dropbox/Economic Opportunity Project/Data/Comparison to Peers/Outputs"
-acs_dropbox_filepath <- file.path(dropbox_data_filepath, "ACS_Cleaned.zip")
-cps_dropbox_filepath <- file.path(dropbox_data_filepath, "CPS_Cleaned.zip")
+acs_dropbox_link <- "https://www.dropbox.com/s/jjywqy6hvn3wtuo/ACS_Cleaned.csv?dl=1"
+cps_dropbox_link <- "https://www.dropbox.com/s/s1auw530a87lk0c/CPS_Cleaned.csv?dl=1"
 
-
-cps <- read_csv(cps_dropbox_filepath) %>%
+cps <- read_csv(cps_dropbox_link) %>%
   janitor::clean_names()
 
-acs <- read_csv(acs_dropbox_filepath) %>%
+acs <- read_csv(acs_dropbox_link) %>%
   janitor::clean_names()
 
 # constants ---------------------------------------------------------------
