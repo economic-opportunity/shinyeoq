@@ -1,3 +1,5 @@
+
+
 # libs --------------------------------------------------------------------
 
 library(shiny)
@@ -7,7 +9,7 @@ library(shinythemes)
 library(shinyWidgets)
 library(plotly)
 library(rjson)
-library(shinyeoq)
+
 
 
 # load --------------------------------------------------------------------
