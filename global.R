@@ -43,38 +43,38 @@ sexes <- c("All", "Male", "Female")
 
 # plotly chorlopleth  -----------------------------------------------------
 
-unemp_rate_fips <- read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv")
+# unemp_rate_fips <- read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv")
 
-url <- 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
-counties <- rjson::fromJSON(file=url)
-
-g <- list(
-  scope = 'usa',
-  projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('white')
-)
-fig <- plot_ly()
-fig <- fig %>% add_trace(
-  type="choropleth",
-  geojson=counties,
-  locations=unemp_rate_fips$fips,
-  z=unemp_rate_fips$unemp,
-  colorscale="Viridis",
-  zmin=0,
-  zmax=12,
-  marker=list(line=list(
-    width=0)
-  )
-)
-fig <- fig %>% colorbar(title = "Unemployment Rate (%)")
-fig <- fig %>% layout(
-  title = "2016 US Unemployment by County"
-)
-
-fig <- fig %>% layout(
-  geo = g
-)
+# url <- 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
+# counties <- rjson::fromJSON(file=url)
+#
+# g <- list(
+#   scope = 'usa',
+#   projection = list(type = 'albers usa'),
+#   showlakes = TRUE,
+#   lakecolor = toRGB('white')
+# )
+# fig <- plot_ly()
+# fig <- fig %>% add_trace(
+#   type="choropleth",
+#   geojson=counties,
+#   locations=unemp_rate_fips$fips,
+#   z=unemp_rate_fips$unemp,
+#   colorscale="Viridis",
+#   zmin=0,
+#   zmax=12,
+#   marker=list(line=list(
+#     width=0)
+#   )
+# )
+# fig <- fig %>% colorbar(title = "Unemployment Rate (%)")
+# fig <- fig %>% layout(
+#   title = "2016 US Unemployment by County"
+# )
+#
+# fig <- fig %>% layout(
+#   geo = g
+# )
 
 # options -----------------------------------------------------------------
 

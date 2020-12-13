@@ -50,11 +50,10 @@ ui <- fluidPage(
                            plotOutput("unemployment_rate")
                   ),
                   tabPanel("Hours worked",
-                           plotOutput("hours_worked")),
-                  tabPanel("PlotlyDemo",
-                           plotlyOutput("plotly_demo"))
+                           plotOutput("hours_worked"))#,
+                  # tabPanel("PlotlyDemo",
+                  #          plotlyOutput("plotly_demo"))
 
-      )
 
     )
   )

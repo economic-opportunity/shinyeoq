@@ -85,8 +85,8 @@ server <- function(input, output) {
 # plotly demo -------------------------------------------------------------
 
 
-  output$plotly_demo <- renderPlotly(
-    fig
-  )
+  # output$plotly_demo <- renderPlotly(
+  #   fig
+  # )
 
 }
