@@ -17,14 +17,33 @@ source("funcs.R")
 
 # load --------------------------------------------------------------------
 
-acs_dropbox_link <- "https://www.dropbox.com/s/jjywqy6hvn3wtuo/ACS_Cleaned.csv?dl=1"
-cps_dropbox_link <- "https://www.dropbox.com/s/s1auw530a87lk0c/CPS_Cleaned.csv?dl=1"
+# dfs <- tribble(
+#   ~source, ~link, ~tmp_file, ~file_name,
+#   "acs", "https://www.dropbox.com/s/sg2pjcbr0iyzzvw/ACS_Cleaned.zip?dl=1", file.path(tmp_dir,  "asc.csv.zip"),
+#   "cps", "https://www.dropbox.com/s/zgqsb2ckw69putb/CPS_Cleaned.zip?dl=1", file.path(tmp_dir,  "cps.csv.zip"),
+#   "bls", "https://www.dropbox.com/s/tj1awlw825bqwcp/lau_15-20.csv.zip?dl=1", file.path(tmp_dir,  "bls.csv.zip"),
+# )
 
-cps <- read_csv(cps_dropbox_link) %>%
+
+acs_dropbox_link <- "https://www.dropbox.com/s/sg2pjcbr0iyzzvw/ACS_Cleaned.zip?dl=1"
+cps_dropbox_link <- "https://www.dropbox.com/s/zgqsb2ckw69putb/CPS_Cleaned.zip?dl=1"
+bls_dropbox_link <- "https://www.dropbox.com/s/agt6mj16d52flhj/lau_unemp_max_month.csv?dl=1"
+
+tmp_dir <- tempdir()
+
+acs_tmp <- file.path(tmp_dir, "asc.csv.zip")
+cps_tmp <- file.path(tmp_dir, "cps.csv.zip")
+
+download.file(acs_dropbox_link, acs_tmp)
+download.file(cps_dropbox_link, cps_tmp)
+
+cps <- read_csv(cps_tmp) %>%
   janitor::clean_names()
 
-acs <- read_csv(acs_dropbox_link) %>%
+acs <- read_csv(acs_tmp) %>%
   janitor::clean_names()
+
+bls <- read_csv(bls_dropbox_link)
 
 # constants ---------------------------------------------------------------
 
@@ -43,38 +62,42 @@ sexes <- c("All", "Male", "Female")
 
 # plotly chorlopleth  -----------------------------------------------------
 
-# unemp_rate_fips <- read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv")
+unemp_rate_fips <- read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv")
 
-# url <- 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
-# counties <- rjson::fromJSON(file=url)
+url <- 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
+counties <- rjson::fromJSON(file=url)
 #
-# g <- list(
-#   scope = 'usa',
-#   projection = list(type = 'albers usa'),
-#   showlakes = TRUE,
-#   lakecolor = toRGB('white')
-# )
-# fig <- plot_ly()
-# fig <- fig %>% add_trace(
-#   type="choropleth",
-#   geojson=counties,
-#   locations=unemp_rate_fips$fips,
-#   z=unemp_rate_fips$unemp,
-#   colorscale="Viridis",
-#   zmin=0,
-#   zmax=12,
-#   marker=list(line=list(
-#     width=0)
-#   )
-# )
-# fig <- fig %>% colorbar(title = "Unemployment Rate (%)")
-# fig <- fig %>% layout(
-#   title = "2016 US Unemployment by County"
-# )
-#
-# fig <- fig %>% layout(
-#   geo = g
-# )
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+fig <- plot_ly()
+fig <- fig %>%
+  add_trace(
+  type="choropleth",
+  geojson=counties,
+  locations=bls$fips,
+  z=bls$value,
+  colorscale="Viridis",
+  zmin=0,
+  zmax=12,
+  marker=list(line=list(
+    width=0)
+  )
+)
+
+fig <- fig %>% colorbar(title = "Unemployment Rate (%)")
+fig <- fig %>% layout(
+  title = glue::glue("US Unemployment by County, {month} {year}",
+                     month = max(bls$period_name),
+                     year = max(bls$year))
+)
+
+fig <- fig %>% layout(
+  geo = g
+)
 
 # options -----------------------------------------------------------------
 
