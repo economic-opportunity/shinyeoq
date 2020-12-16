@@ -6,16 +6,25 @@ server <- function(input, output) {
 
   })
 
-  cps_filtered_df <- eventReactive(input$calculate, {
+  wage_filtered_df <- reactive({
 
-    cps %>%
-      process_data(input) %>%
-      make_percentiles(hourlywage, 100)
+    acs_wage %>%
+      process_data(input)
 
   })
 
-  cps_decile_df <- reactive({
-    cps_filtered_df() %>%
+  unemployment_filtered_df <- reactive({
+    acs_unemployment %>%
+      process_data(input)
+  })
+
+  hours_filtered_df <- reactive({
+    cps_hours %>%
+      process_data(input)
+  })
+
+  wage_decile_df <- reactive({
+    wage_filtered_df() %>%
       mutate(decile = ntile(mean, 10)) %>%
       group_by(decile) %>%
       summarize(mean_wage = mean(mean))
@@ -23,38 +32,38 @@ server <- function(input, output) {
 
   user_percentile <- reactive({
 
-    cps_filtered_df() %>%
+    wage_filtered_df() %>%
       filter(mean >= input$user_wage) %>%
       pull(percentile) %>%
-      min() %>%
       # avoiding infinite
+      min(., na.rm = TRUE) %>%
       min(., 100)
 
   })
 
 
 
-  output$cps_histogram <- renderPlot({
+  output$wage_histogram <- renderPlot({
 
     validate(
       need(input$user_wage, "Please select your wage.")
     )
 
-    cps_filtered_df() %>%
+    wage_filtered_df() %>%
       ggplot(aes(mean)) +
       geom_histogram() +
       geom_vline(xintercept = input$user_wage)
 
   })
 
-  output$cps_decile_plot <- renderPlot({
+  output$wage_decile_plot <- renderPlot({
 
     validate(
       need(input$user_wage, "Please select your wage.")
     )
 
 
-    cps_decile_df() %>%
+    wage_decile_df() %>%
       mutate(has_user_higher_wage = mean_wage <= input$user_wage) %>%
       ggplot(aes(decile, mean_wage, fill = has_user_higher_wage)) +
       geom_col() +
@@ -64,26 +73,34 @@ server <- function(input, output) {
 
   })
 
-  output$cps_ecdf <- renderPlot({
+  output$wage_ecdf <- renderPlot({
 
     validate(
       need(input$user_wage, "Please select your wage.")
     )
 
-    cps_filtered_df() %>%
+    wage_filtered_df() %>%
       ggplot() +
       geom_line(aes(mean, percentile)) +
       geom_point(aes(input$user_wage, user_percentile()))
 
   })
 
-  output$cps_text <- renderPrint({
+  output$wage_text <- renderPrint({
     glue::glue("Your wage is higher than ", user_percentile(), "% of the comparison group.")
   })
 
+  output$unemployment_table <- renderDT({
+    unemployment_filtered_df() %>%
+      datatable()
+  })
+
+  output$hours_table <- renderDT({
+    hours_filtered_df() %>%
+      datatable()
+  })
 
 # plotly demo -------------------------------------------------------------
-
 
   output$plotly_demo <- renderPlotly(
     fig

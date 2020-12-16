@@ -161,14 +161,11 @@ clean_employment <- function(data, var) {
 #' }
 process_data <- function(data, input) {
   data %>%
-    make_age_buckets(age) %>%
-    clean_race_ethnicity(racehispanic) %>%
-    clean_education(education) %>%
     filter(
-      if (input$comp_edu  == "All")   TRUE else education      == input$comp_edu,
-      if (input$comp_race == "All")   TRUE else race_ethnicity == input$comp_race,
-      if (input$comp_age  == "All")   TRUE else age_bucket     == input$comp_age,
-      if (input$comp_sex  ==     2)   TRUE else is_male        == input$comp_sex # 2 means All
+        education      == input$comp_edu,
+        race_ethnicity == input$comp_race,
+        age_bucket     == input$comp_age,
+        sex        == input$comp_sex
     )
 
 }

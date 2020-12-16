@@ -22,10 +22,16 @@ acs <- read_csv(acs_dropbox_filepath) %>%
 
 # transform ---------------------------------------------------------------
 
-
 grp_vars <- c("age_bucket", "education", "race_ethnicity", "is_male")
 
 acs_summarized <- acs %>%
   make_age_buckets(age) %>%
   clean_race_ethnicity(racehispanic) %>%
-  make_percentiles(!!!grp_vars)
+  clean_education(education) %>%
+  make_percentiles(totalwage, age_bucket, education, race_ethnicity, is_male)
+
+cps_wage <- cps %>%
+  make_age_buckets(age) %>%
+  clean_race_ethnicity(racehispanic) %>%
+  clean_education(education) %>%
+  make_percentiles(totalwage, age_bucket, education, race_ethnicity, is_male)
