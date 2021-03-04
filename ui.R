@@ -1,7 +1,35 @@
 ui <- navbarPage("EOQ Demo v0",
   # set theme
   theme = shinytheme("yeti"),
+  tabPanel("Individual Jobs",
+           sidebarLayout(
+             sidebarPanel(
 
+             selectInput("individual_edu",
+                         h4("Your education level:"),
+                         choices = edu_levels),
+             selectInput("individual_race",
+                         h4("Your race/ethnicity:"),
+                         selected = "All",
+                         choices = races_ethnicities),
+             # sliderInput("comp_age",
+             #             h4("Your age range:"),
+             #             min = 0, max = 100,
+             #             value = c(40,60)),
+             selectInput("individual_age",
+                         h4("Your age bracket:"),
+                         selected = "All",
+                         choices = age_ranges),
+             selectInput("individual_sex",
+                         h4("Your sex:"),
+                         selected = "All",
+                         choices = sexes)
+             ),
+           mainPanel(
+             DTOutput("individual_job_table")
+             )
+           )
+           ),
   tabPanel("Comparison to Peers",
            sidebarLayout(
              sidebarPanel(

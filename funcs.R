@@ -45,12 +45,12 @@ make_age_buckets <- function(data, var){
   data %>%
     mutate(
       age_bucket = case_when(
-        {{ var }} >= 0  & {{ var }} < 20 ~ "Under 20",
-        {{ var }} >= 20 & {{ var }} < 30 ~ "20-29",
-        {{ var }} >= 30 & {{ var }} < 40 ~ "30-39",
-        {{ var }} >= 40 & {{ var }} < 50 ~ "40-49",
-        {{ var }} >= 50 & {{ var }} < 60 ~ "50-59",
-        {{ var }} >= 60                  ~ "Over 60"
+        {{ var }} >= 0  & {{ var }} < 25 ~ "Under 25",
+        {{ var }} >= 25 & {{ var }} < 35 ~ "25-34",
+        {{ var }} >= 35 & {{ var }} < 45 ~ "35-44",
+        {{ var }} >= 45 & {{ var }} < 55 ~ "45-54",
+        {{ var }} >= 55 & {{ var }} < 65 ~ "55-64",
+        {{ var }} >= 65                  ~ "Over 65"
       )
     )
 }
@@ -156,18 +156,34 @@ clean_employment <- function(data, var) {
 #' @examples
 #' \dontrun{
 #' # only works inside a shiny app
-#' eoq::sample_cps %>% process_data(input)
-#' eoq::sample_acs %>% process_data(input)
+#' eoq::sample_cps %>% process_comp_data(input)
+#' eoq::sample_acs %>% process_comp_data(input)
 #' }
-process_data <- function(data, input) {
+process_comp_data <- function(data, input) {
   data %>%
     filter(
         education      == input$comp_edu,
         race_ethnicity == input$comp_race,
         age_bucket     == input$comp_age,
-        sex        == input$comp_sex
+        sex            == input$comp_sex
     )
 
+}
+
+process_individual_data <- function(data, input) {
+  data %>%
+    mutate(
+      sex = if_else(is_male == 1, "Male", "Female"),
+      age_bucket = age_group,
+      industry = naics_2digit_label
+    ) %>%
+    clean_education(education) %>%
+    filter(
+      education      == input$individual_edu,
+      # race_ethnicity == input$comp_race,
+      age_bucket     == input$individual_age,
+      sex            == input$individual_sex
+    )
 }
 
 #' Calculate unemployment metric

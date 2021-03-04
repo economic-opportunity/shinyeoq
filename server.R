@@ -9,18 +9,23 @@ server <- function(input, output) {
   wage_filtered_df <- reactive({
 
     acs_wage %>%
-      process_data(input)
+      process_comp_data(input)
 
   })
 
   unemployment_filtered_df <- reactive({
     acs_unemployment %>%
-      process_data(input)
+      process_comp_data(input)
   })
 
   hours_filtered_df <- reactive({
     cps_hours %>%
-      process_data(input)
+      process_comp_data(input)
+  })
+
+  individual_job_filtered_df <- reactive({
+    individual_job %>%
+      process_individual_data(input)
   })
 
   wage_decile_df <- reactive({
@@ -40,8 +45,6 @@ server <- function(input, output) {
       min(., 100)
 
   })
-
-
 
   output$wage_histogram <- renderPlot({
 
@@ -98,6 +101,17 @@ server <- function(input, output) {
   output$hours_table <- renderDT({
     hours_filtered_df() %>%
       datatable()
+  })
+
+
+# individual job ----------------------------------------------------------
+
+  output$individual_job_table <- renderDT({
+    individual_job_filtered_df() %>%
+      select(industry, likelihood, expectedwage) %>%
+      datatable() %>%
+      formatPercentage("likelihood") %>%
+      formatCurrency("expectedwage")
   })
 
 # plotly demo -------------------------------------------------------------
