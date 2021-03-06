@@ -54,6 +54,7 @@ edu_levels <- c("All", "Less Than High School", "High School",
 sexes <- c("All", "Male", "Female")
 
 
+
 # plotly chorlopleth  ----------------------------------------------------
 #
 g <- list(

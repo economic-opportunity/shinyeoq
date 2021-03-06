@@ -26,7 +26,10 @@ ui <- navbarPage("EOQ Demo v0",
                          choices = sexes)
              ),
            mainPanel(
-             DTOutput("individual_job_table")
+             DTOutput("individual_job_table"),
+             plotlyOutput("individual_job_chart"),
+             DTOutput("individual_job_detail")
+
              )
            )
            ),

@@ -114,6 +114,36 @@ server <- function(input, output) {
       formatCurrency("expectedwage")
   })
 
+  output$individual_job_chart <- renderPlotly({
+    individual_job_filtered_df() %>%
+      plot_ly(
+        source = "individual_job_scatter",
+        x = ~likelihood, y = ~expectedwage, customdata = ~industry,
+        text = ~paste('Industry:', industry,
+                      '<br>Likelihood:', scales::percent(likelihood),
+                      '<br>Average wage:', scales::dollar(expectedwage)),
+        # hovertemplate = "Industry: %{industry}<br>Wage: %{expectedwage:.2f}<br>Likelihood: %{likelihood:p}",
+        size = ~likelihood, color = ~expectedwage)
+  })
+
+  output$individual_job_detail <- renderDT({
+
+    # get click data from plotly chart
+    click_data <- event_data("plotly_click", source = "individual_job_scatter")
+    if (is.null(click_data)) return(NULL)
+
+    # get variables clicked in plotly chart
+    vars <- c(click_data[["x"]], click_data[["y"]], click_data[["customdata"]])
+    selected_industry_from_plotly <- click_data[["customdata"]]
+
+    individual_job_filtered_df() %>%
+      filter(
+        industry == selected_industry_from_plotly
+      ) %>%
+      datatable()
+
+  })
+
 # plotly demo -------------------------------------------------------------
 
   output$plotly_demo <- renderPlotly(
