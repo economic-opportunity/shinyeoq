@@ -5,6 +5,6 @@ account: seamus
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2718054
-bundleId: 4297983
+bundleId: 4310048
 url: https://seamus.shinyapps.io/eoq_demo/
-when: 1614822677.53202
+when: 1615065266.86286

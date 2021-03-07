@@ -10,6 +10,7 @@ library(shinyWidgets)
 library(plotly)
 library(rjson)
 library(DT)
+library(eoq)
 
 # funcs -------------------------------------------------------------------
 

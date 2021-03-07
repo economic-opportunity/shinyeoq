@@ -11,7 +11,8 @@ Learn more about shiny here: https://shiny.rstudio.com/tutorial/
 
 ## Installation
 
-```r
-devtools::install_github("economic-opportunity/shinyeoq")
-```
+To install `eoq`, make sure you've got he `remotes` package installed (`install.packages("remotes")`) and run the following:
 
+```r
+remotes::install_github("economic-opportunity/shinyeoq")
+```
